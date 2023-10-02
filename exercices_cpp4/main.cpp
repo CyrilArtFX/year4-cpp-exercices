@@ -1,7 +1,7 @@
 #include <iostream>
 #include "IExercice.h"
 
-#include "SortingExercice/SortingAlgorithms.h"
+#include <SortingExercice/SortingAlgorithms.h>
 
 int main()
 {
