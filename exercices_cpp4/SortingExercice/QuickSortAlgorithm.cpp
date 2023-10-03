@@ -64,3 +64,51 @@ bool QuickSortAlgorithm::isSorted(std::vector<int> v)
 
 	return true;
 }
+
+
+
+
+
+
+
+/*
+* We discussed of the quick sort algorithm with Arthur and Mael and I understood that my algorithm is far from being optimized.
+* This is still what I have done for the exercice (try to understand the algorithm and write it in C++ without checking on internet how it should be done).
+* 
+* However, I want to put a proper version of the quick sort algorithm here that is an O(n log n) algorithm.
+* (This is almost the one Mael did, so don't evaluate me on this.)
+*/
+std::vector<int> QuickSortAlgorithm::BetterQuickSortInt(std::vector<int> vectorToSort)
+{
+	if (vectorToSort.size() <= 1)
+	{
+		return vectorToSort;
+	}
+
+	int pivot_id = vectorToSort.size() - 1;
+
+	for (int i = 0; i < pivot_id;)
+	{
+		if (vectorToSort[i] > vectorToSort[pivot_id])
+		{
+			int temp = vectorToSort[i];
+			vectorToSort[i] = vectorToSort[pivot_id - 1];
+			vectorToSort[pivot_id - 1] = vectorToSort[pivot_id];
+			vectorToSort[pivot_id] = temp;
+			pivot_id -= 1;
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	std::vector<int> smaller(vectorToSort.begin(), vectorToSort.begin() + pivot_id);
+	std::vector<int> greater(vectorToSort.begin() + pivot_id, vectorToSort.end());
+
+	smaller = BetterQuickSortInt(smaller);
+	greater = BetterQuickSortInt(greater);
+
+	smaller.insert(smaller.end(), greater.begin(), greater.end());
+	return smaller;
+}
