@@ -1,4 +1,5 @@
 #include "QuickSortAlgorithm.h"
+#include <algorithm>
 
 
 std::vector<int> QuickSortAlgorithm::QuickSortInt(std::vector<int> vectorToSort)
