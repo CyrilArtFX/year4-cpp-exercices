@@ -44,14 +44,8 @@ std::vector<int> QuickSortAlgorithm::QuickSortInt(std::vector<int> vectorToSort)
 	std::vector<int> out; //  creation of the return vector
 	out.reserve(return_size);
 
-	for (int i : smaller) //  put the now sorted partitions into the return vector
-	{
-		out.push_back(i);
-	}
-	for (int i : greater)
-	{
-		out.push_back(i);
-	}
+	out.insert(out.begin(), smaller.begin(), smaller.end()); //  put the now sorted partitions into the return vector
+	out.insert(out.end(), greater.begin(), greater.end());
 
 	return out;
 }
