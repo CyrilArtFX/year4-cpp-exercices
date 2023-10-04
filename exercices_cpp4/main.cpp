@@ -4,6 +4,11 @@
 #include <SortingExercice/SortingAlgorithms.h>
 #include <OOPTest/TravelerTestOOP.h>
 
+
+/*
+* Execute the exercice you want.
+*/
+
 int main()
 {
 	std::cout << "Cyril Crozat C++ exercices :\n\n";
@@ -11,5 +16,5 @@ int main()
 	IExercice* exercice_sorting = new SortingAlgorithms();
 	IExercice* exercice_oop = new TravelerTestOOP();
 
-	exercice_sorting->Execute();
+	exercice_oop->Execute();
 }

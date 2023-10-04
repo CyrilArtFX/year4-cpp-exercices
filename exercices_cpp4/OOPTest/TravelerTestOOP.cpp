@@ -6,26 +6,25 @@
 
 
 
-/*
+struct Road
+{
+	class City* destination;
+	int distance;
+};
+
+
+
 class City
 {
 public:
 	City() {}
 
-	void AddRoad(Road road) 
+	void AddRoad(struct Road road) 
 	{
 		roads.push_back(road);
 	}
 
-	std::vector<Road> roads;
-};
-
-
-
-struct Road
-{
-	City* destination;
-	int distance;
+	std::vector<struct Road> roads;
 };
 
 
@@ -35,30 +34,74 @@ class Traveler
 public:
 	Traveler() {}
 
-	void AddCity(City* city)
+	void AddCity(class City* city)
 	{
 		cities.push_back(city);
 		cities_to_travel.insert(city);
 	}
 
-	void Start(City* start);
+	int Travel(class City* start);
 
 private:
-	std::vector<City*> cities;
-	City* start_city;
-	std::unordered_set<City*> cities_to_travel;
+	std::vector<class City*> cities;
+	std::unordered_set<class City*> cities_to_travel;
 };
 
 
-void Traveler::Start(City* start)
+int Traveler::Travel(City* start)
 {
-	start_city = start;
 	cities_to_travel.erase(start);
+	City* current_pos = start;
+	int distance_traveled = 0;
 
+	while (1)
+	{
+		std::vector<Road> roads_available = current_pos->roads;
+		std::vector<Road> roads_desirable;
 
+		if (roads_available.empty()) return -1;
+
+		for (Road road : roads_available)
+		{
+			auto city = cities_to_travel.find(road.destination);
+			if (city != cities_to_travel.end())
+			{
+				roads_desirable.push_back(road);
+			}
+		}
+
+		if (roads_desirable.empty())
+		{
+			roads_desirable = roads_available;
+		}
+
+		Road best_road = roads_desirable[0];
+		for (Road road : roads_desirable)
+		{
+			if (road.distance < best_road.distance)
+			{
+				best_road = road;
+			}
+		}
+
+		current_pos = best_road.destination;
+		distance_traveled += best_road.distance;
+		cities_to_travel.erase(current_pos);
+
+		if (cities_to_travel.empty())
+		{
+			if (current_pos == start)
+			{
+				return distance_traveled;
+			}
+			else
+			{
+				cities_to_travel.insert(start);
+			}
+		}
+	}
 }
 
-*/
 
 
 
@@ -68,7 +111,7 @@ void TravelerTestOOP::Execute()
 	std::cout << "--------------------------------------------------------------\n\n";
 
 
-	/*City* A = new City();
+	City* A = new City();
 	City* B = new City();
 	City* C = new City();
 	City* D = new City();
@@ -105,12 +148,13 @@ void TravelerTestOOP::Execute()
 	traveler.AddCity(E);
 
 
-	traveler.Start(D);
+	int min_dist = traveler.Travel(D);
+	std::cout << "The minimum distance for going through each city (starting and finishing on city D) is " << min_dist << ".\n\n";
 
 
 	delete A;
 	delete B;
 	delete C;
 	delete D;
-	delete E;*/
+	delete E;
 }
