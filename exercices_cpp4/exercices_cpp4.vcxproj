@@ -133,12 +133,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OOPTest\TravelerTestOOP.cpp" />
     <ClCompile Include="SortingExercice\QuickSortAlgorithm.cpp" />
     <ClCompile Include="SortingExercice\SortingAlgorithms.cpp" />
     <ClCompile Include="Utils\StringPlus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IExercice.h" />
+    <ClInclude Include="OOPTest\TravelerTestOOP.h" />
     <ClInclude Include="SortingExercice\QuickSortAlgorithm.h" />
     <ClInclude Include="SortingExercice\SortingAlgorithms.h" />
     <ClInclude Include="Utils\StringPlus.h" />
