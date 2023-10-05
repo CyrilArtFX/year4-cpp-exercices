@@ -3,13 +3,30 @@
 #include <iostream>
 #include <vector>
 #include <unordered_set>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
 
 
 
 struct Road
 {
+	class City* origin;
 	class City* destination;
 	int distance;
+};
+
+
+struct Plan
+{
+	std::vector<City*> cities_path;
+	int distance;
+};
+
+
+struct Possibility
+{
+	std::vector<City*> cities_to_travel;
 };
 
 
@@ -17,7 +34,7 @@ struct Road
 class City
 {
 public:
-	City() {}
+	City(std::string _name) : name(_name) {}
 
 	void AddRoad(struct Road road) 
 	{
@@ -25,6 +42,7 @@ public:
 	}
 
 	std::vector<struct Road> roads;
+	std::string name{ "" };
 };
 
 
@@ -37,69 +55,131 @@ public:
 	void AddCity(class City* city)
 	{
 		cities.push_back(city);
-		cities_to_travel.insert(city);
 	}
 
-	int Travel(class City* start);
+	void Travel(class City* start);
 
 private:
 	std::vector<class City*> cities;
-	std::unordered_set<class City*> cities_to_travel;
 };
 
 
-int Traveler::Travel(City* start)
+void Traveler::Travel(City* start)
 {
-	cities_to_travel.erase(start);
-	City* current_pos = start;
-	int distance_traveled = 0;
+	std::vector<Possibility> possibilities;
 
-	while (1)
+
+	std::vector<City*> cities_remaining_1 = cities;
+	auto iter_1 = std::find(cities_remaining_1.begin(), cities_remaining_1.end(), start);
+	if (iter_1 != cities_remaining_1.end())
 	{
-		std::vector<Road> roads_available = current_pos->roads;
-		std::vector<Road> roads_desirable;
+		std::iter_swap(iter_1, end(cities_remaining_1) - 1);
+		cities_remaining_1.pop_back();
+	}
 
-		if (roads_available.empty()) return -1;
 
-		for (Road road : roads_available)
+	//  fill possibilities (the way I do this only works with 5 cities)
+	for (auto city_1 : cities_remaining_1)
+	{
+		std::vector<City*> cities_remaining_2 = cities_remaining_1;
+		auto iter_2 = std::find(cities_remaining_2.begin(), cities_remaining_2.end(), city_1);
+		if (iter_2 != cities_remaining_2.end())
 		{
-			auto city = cities_to_travel.find(road.destination);
-			if (city != cities_to_travel.end())
-			{
-				roads_desirable.push_back(road);
-			}
+			std::iter_swap(iter_2, end(cities_remaining_2) - 1);
+			cities_remaining_2.pop_back();
 		}
 
-		if (roads_desirable.empty())
+		for (auto city_2 : cities_remaining_2)
 		{
-			roads_desirable = roads_available;
-		}
-
-		Road best_road = roads_desirable[0];
-		for (Road road : roads_desirable)
-		{
-			if (road.distance < best_road.distance)
+			std::vector<City*> cities_remaining_3 = cities_remaining_2;
+			auto iter_3 = std::find(cities_remaining_3.begin(), cities_remaining_3.end(), city_2);
+			if (iter_3 != cities_remaining_3.end())
 			{
-				best_road = road;
+				std::iter_swap(iter_3, end(cities_remaining_3) - 1);
+				cities_remaining_3.pop_back();
 			}
-		}
 
-		current_pos = best_road.destination;
-		distance_traveled += best_road.distance;
-		cities_to_travel.erase(current_pos);
+			for (auto city_3 : cities_remaining_3)
+			{
+				std::vector<City*> cities_remaining_4 = cities_remaining_3;
+				auto iter_4 = std::find(cities_remaining_4.begin(), cities_remaining_4.end(), city_3);
+				if (iter_4 != cities_remaining_4.end())
+				{
+					std::iter_swap(iter_4, end(cities_remaining_4) - 1);
+					cities_remaining_4.pop_back();
+				}
 
-		if (cities_to_travel.empty())
-		{
-			if (current_pos == start)
-			{
-				return distance_traveled;
-			}
-			else
-			{
-				cities_to_travel.insert(start);
+				std::vector<City*> poss_cities{ start, city_1, city_2, city_3, *cities_remaining_4.begin(), start};
+
+				possibilities.push_back({ poss_cities });
 			}
 		}
 	}
+
+
+	//  create plans
+	std::vector<Plan> plans;
+	for (Possibility possibility : possibilities)
+	{
+		//  check if possibility is realisable
+		bool realisable = true;
+		int plan_distance = 0;
+
+		for (int i = 0; i < possibility.cities_to_travel.size() - 1; i++)
+		{
+			bool city_check = false;
+			for (Road road : possibility.cities_to_travel[i]->roads)
+			{
+				if (road.destination == possibility.cities_to_travel[i + 1])
+				{
+					city_check = true;
+					plan_distance += road.distance;
+					break;
+				}
+			}
+			if (!city_check)
+			{
+				realisable = false;
+				break;
+			}
+		}
+
+		if (!realisable) continue;
+
+
+		//  store the possibility in a plan
+		plans.push_back({ possibility.cities_to_travel, plan_distance });
+	}
+
+
+	//  find the shortest plan
+	if (plans.empty())
+	{
+		std::cout << "The traveler could not find a way :(\n\n";
+		return;
+	}
+
+	Plan shortest_plan = plans[0];
+	for (Plan plan : plans)
+	{
+		if (plan.distance < shortest_plan.distance)
+		{
+			shortest_plan = plan;
+		}
+	}
+
+
+	//  write the shortest plan
+	std::cout << "\n\nOne of the shortest plan to travel through all cities, starting and ending on city " << start->name << " is :  ";
+	for (int i = 0; i < shortest_plan.cities_path.size(); i++)
+	{
+		std::cout << shortest_plan.cities_path[i]->name;
+		if (i < shortest_plan.cities_path.size() - 1)
+		{
+			std::cout << " -> ";
+		}
+	}
+	std::cout << "  and it's total distance is " << shortest_plan.distance << ".\n\n";
 }
 
 
@@ -107,36 +187,36 @@ int Traveler::Travel(City* start)
 
 void TravelerTestOOP::Execute()
 {
-	std::cout << "Executing object oriented programming test with the traveller.\n";
-	std::cout << "--------------------------------------------------------------\n\n";
+	std::cout << "Executing object oriented programming test with the traveler. (Using brute force)\n";
+	std::cout << "---------------------------------------------------------------------------------\n\n";
 
 
-	City* A = new City();
-	City* B = new City();
-	City* C = new City();
-	City* D = new City();
-	City* E = new City();
+	City* A = new City("A");
+	City* B = new City("B");
+	City* C = new City("C");
+	City* D = new City("D");
+	City* E = new City("E");
 
-	A->AddRoad(Road{ B, 2 });
-	A->AddRoad(Road{ C, 2 });
+	A->AddRoad(Road{ A, B, 2 });
+	A->AddRoad(Road{ A, C, 2 });
 
-	B->AddRoad(Road{ A, 2 });
-	B->AddRoad(Road{ C, 3 });
-	B->AddRoad(Road{ D, 3 });
-	B->AddRoad(Road{ E, 1 });
+	B->AddRoad(Road{ B, A, 2 });
+	B->AddRoad(Road{ B, C, 3 });
+	B->AddRoad(Road{ B, D, 3 });
+	B->AddRoad(Road{ B, E, 1 });
 
-	C->AddRoad(Road{ A, 2 });
-	C->AddRoad(Road{ B, 3 });
-	C->AddRoad(Road{ D, 1 });
-	C->AddRoad(Road{ E, 3 });
+	C->AddRoad(Road{ C, A, 2 });
+	C->AddRoad(Road{ C, B, 3 });
+	C->AddRoad(Road{ C, D, 1 });
+	C->AddRoad(Road{ C, E, 3 });
 
-	D->AddRoad(Road{ B, 3 });
-	D->AddRoad(Road{ C, 1 });
-	D->AddRoad(Road{ E, 3 });
+	D->AddRoad(Road{ D, B, 3 });
+	D->AddRoad(Road{ D, C, 1 });
+	D->AddRoad(Road{ D, E, 3 });
 
-	E->AddRoad(Road{ B, 1 });
-	E->AddRoad(Road{ C, 3 });
-	E->AddRoad(Road{ D, 3 });
+	E->AddRoad(Road{ E, B, 1 });
+	E->AddRoad(Road{ E, C, 3 });
+	E->AddRoad(Road{ E, D, 3 });
 
 
 	Traveler traveler;
@@ -148,8 +228,8 @@ void TravelerTestOOP::Execute()
 	traveler.AddCity(E);
 
 
-	int min_dist = traveler.Travel(D);
-	std::cout << "The minimum distance for going through each city (starting and finishing on city D) is " << min_dist << ".\n\n";
+	//  you can change the starting city here
+	traveler.Travel(D);
 
 
 	delete A;
