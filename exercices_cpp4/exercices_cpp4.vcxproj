@@ -133,16 +133,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Multithreading\MutexesExo.cpp" />
+    <ClCompile Include="Multithreading\ParallelismExo.cpp" />
     <ClCompile Include="OOPTest\TravelerTestOOP.cpp" />
     <ClCompile Include="SortingExercice\QuickSortAlgorithm.cpp" />
     <ClCompile Include="SortingExercice\SortingAlgorithms.cpp" />
+    <ClCompile Include="Utils\Matrix3.cpp" />
     <ClCompile Include="Utils\StringPlus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IExercice.h" />
+    <ClInclude Include="Multithreading\MutexesExo.h" />
+    <ClInclude Include="Multithreading\ParallelismExo.h" />
     <ClInclude Include="OOPTest\TravelerTestOOP.h" />
     <ClInclude Include="SortingExercice\QuickSortAlgorithm.h" />
     <ClInclude Include="SortingExercice\SortingAlgorithms.h" />
+    <ClInclude Include="Utils\Matrix3.h" />
     <ClInclude Include="Utils\StringPlus.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

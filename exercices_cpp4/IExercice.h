@@ -5,5 +5,5 @@ class IExercice
 public:
 	virtual ~IExercice() {}
 
-	virtual void Execute() {}
+	virtual void Execute() = 0;
 };

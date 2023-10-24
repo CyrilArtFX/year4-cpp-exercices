@@ -3,6 +3,8 @@
 
 #include <SortingExercice/SortingAlgorithms.h>
 #include <OOPTest/TravelerTestOOP.h>
+#include <Multithreading/ParallelismExo.h>
+#include <Multithreading/MutexesExo.h>
 
 
 /*
@@ -15,6 +17,9 @@ int main()
 
 	IExercice* exercice_sorting = new SortingAlgorithms();
 	IExercice* exercice_oop = new TravelerTestOOP();
+	IExercice* exercice_parallelism = new ParallelismExo();
+	IExercice* exercice_mutex = new MutexesExo();
 
-	exercice_oop->Execute();
+	exercice_parallelism->Execute();
+	exercice_mutex->Execute();
 }
