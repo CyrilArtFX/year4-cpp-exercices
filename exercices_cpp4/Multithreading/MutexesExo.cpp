@@ -9,7 +9,7 @@
 
 
 std::mutex mutex;
-
+int counter = 0;
 
 
 void MutexesExo::Execute()
@@ -136,28 +136,31 @@ void MutexesExo::naiveOddNumbers()
 	}
 }
 
-void MutexesExo::mutexEvenNumbers() //  doesn't work
+void MutexesExo::mutexEvenNumbers()
 {
-	for (int i = 0; i <= 1000; i += 2)
+	while (counter <= 1000)
 	{
+		if (counter % 2 != 0) continue;
+
 		std::lock_guard<std::mutex> lock(mutex);
-		std::string str = ""; 
-		if (i == 0) str += " "; 
-		str += std::to_string(i); 
-		str += " "; 
-		std::cout << str; 
+
+		if (counter == 0) std::cout << " ";
+		std::cout << counter << " ";
+		
+		counter++;
 	}
 }
 
-void MutexesExo::mutexOddNumbers() //  doesn't work
+void MutexesExo::mutexOddNumbers()
 {
-	for (int i = 1; i <= 1000; i += 2)
+	while (counter <= 1000)
 	{
+		if (counter % 2 != 1) continue;
+
 		std::lock_guard<std::mutex> lock(mutex);
-		std::string str = ""; 
-		if (i == 1) str += " ";
-		str += std::to_string(i);
-		str += " ";
-		std::cout << str; 
+
+		std::cout << counter << " ";
+
+		counter++;
 	}
 }
