@@ -138,6 +138,7 @@
     <ClCompile Include="OOPTest\TravelerTestOOP.cpp" />
     <ClCompile Include="SortingExercice\QuickSortAlgorithm.cpp" />
     <ClCompile Include="SortingExercice\SortingAlgorithms.cpp" />
+    <ClCompile Include="SynchroniseThreads\Restaurant.cpp" />
     <ClCompile Include="Utils\Matrix3.cpp" />
     <ClCompile Include="Utils\StringPlus.cpp" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="OOPTest\TravelerTestOOP.h" />
     <ClInclude Include="SortingExercice\QuickSortAlgorithm.h" />
     <ClInclude Include="SortingExercice\SortingAlgorithms.h" />
+    <ClInclude Include="SynchroniseThreads\Restaurant.h" />
     <ClInclude Include="Utils\Matrix3.h" />
     <ClInclude Include="Utils\StringPlus.h" />
   </ItemGroup>

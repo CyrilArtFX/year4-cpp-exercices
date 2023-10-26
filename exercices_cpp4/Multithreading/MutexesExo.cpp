@@ -61,7 +61,7 @@ void MutexesExo::Execute()
 	gt2.join();
 	gt3.join();
 
-	std::cout << "Threaded (with global variable) sum of table : " << std::to_string(threadedSumGlobal) << std::endl << std::endl;
+	std::cout << "Threaded (with global variable) sum of table : " << std::to_string(threadedSumGlobal) << std::endl << std::endl << std::endl;
 	
 
 
@@ -144,7 +144,6 @@ void MutexesExo::mutexEvenNumbers()
 
 		std::lock_guard<std::mutex> lock(mutex);
 
-		if (counter == 0) std::cout << " ";
 		std::cout << counter << " ";
 		
 		counter++;
