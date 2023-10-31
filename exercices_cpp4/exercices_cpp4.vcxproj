@@ -138,9 +138,13 @@
     <ClCompile Include="OOPTest\TravelerTestOOP.cpp" />
     <ClCompile Include="SortingExercice\QuickSortAlgorithm.cpp" />
     <ClCompile Include="SortingExercice\SortingAlgorithms.cpp" />
+    <ClCompile Include="SynchroniseThreads\Chef.cpp" />
+    <ClCompile Include="SynchroniseThreads\Cook.cpp" />
+    <ClCompile Include="SynchroniseThreads\Customer.cpp" />
     <ClCompile Include="SynchroniseThreads\Restaurant.cpp" />
     <ClCompile Include="Utils\Matrix3.cpp" />
     <ClCompile Include="Utils\StringPlus.cpp" />
+    <ClCompile Include="SynchroniseThreads\Waiter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IExercice.h" />
@@ -149,9 +153,13 @@
     <ClInclude Include="OOPTest\TravelerTestOOP.h" />
     <ClInclude Include="SortingExercice\QuickSortAlgorithm.h" />
     <ClInclude Include="SortingExercice\SortingAlgorithms.h" />
+    <ClInclude Include="SynchroniseThreads\Chef.h" />
+    <ClInclude Include="SynchroniseThreads\Cook.h" />
+    <ClInclude Include="SynchroniseThreads\Customer.h" />
     <ClInclude Include="SynchroniseThreads\Restaurant.h" />
     <ClInclude Include="Utils\Matrix3.h" />
     <ClInclude Include="Utils\StringPlus.h" />
+    <ClInclude Include="SynchroniseThreads\Waiter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
