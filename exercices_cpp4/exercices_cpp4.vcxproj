@@ -157,6 +157,7 @@
     <ClInclude Include="SynchroniseThreads\Cook.h" />
     <ClInclude Include="SynchroniseThreads\Customer.h" />
     <ClInclude Include="SynchroniseThreads\Restaurant.h" />
+    <ClInclude Include="SynchroniseThreads\RestaurantUtils.h" />
     <ClInclude Include="Utils\Matrix3.h" />
     <ClInclude Include="Utils\StringPlus.h" />
     <ClInclude Include="SynchroniseThreads\Waiter.h" />
