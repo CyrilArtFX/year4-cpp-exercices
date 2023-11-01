@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 
+#include "RestaurantUtils.h"
 #include "Customer.h"
 #include "Waiter.h"
 #include "Cook.h"
@@ -15,6 +16,15 @@
 //  I struggled to properly understand the differents concepts of this courses
 //  and I wanted to at least make something that works using conditions variables
 //  and different classes for the involved actors to better understand those concepts.
+
+std::queue<Order> RestaurantUtils::q_orders;
+std::queue<Meal> RestaurantUtils::q_meals;
+
+std::mutex RestaurantUtils::mut_orders;
+std::mutex RestaurantUtils::mut_meals;
+
+std::condition_variable RestaurantUtils::cv_order_available;
+std::condition_variable RestaurantUtils::cv_meal_taken;
 
 
 void Restaurant::Execute()
