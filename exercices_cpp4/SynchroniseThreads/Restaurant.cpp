@@ -13,9 +13,10 @@
 
 
 //  To be fair, this code is greatly inspired by Mael's one.
-//  I struggled to properly understand the differents concepts of this courses
-//  and I wanted to at least make something that works using conditions variables
+//  I struggled a bit to properly understand the differents concepts of this courses
+//  and I wanted to at least make something that works using queues, mutex and condition variables
 //  and different classes for the involved actors to better understand those concepts.
+
 
 std::queue<Order> RestaurantUtils::q_orders;
 std::queue<Meal> RestaurantUtils::q_meals;
@@ -23,11 +24,9 @@ std::queue<Meal> RestaurantUtils::q_meals;
 std::mutex RestaurantUtils::mut_orders;
 std::mutex RestaurantUtils::mut_meals;
 
-std::condition_variable RestaurantUtils::cv_order_available;
-std::condition_variable RestaurantUtils::cv_order_taken;
-std::condition_variable RestaurantUtils::cv_ingredients_ready;
-std::condition_variable RestaurantUtils::cv_meals_prepared;
-std::condition_variable RestaurantUtils::cv_meal_taken;
+std::condition_variable RestaurantUtils::cv_update;
+
+RestaurantStatus RestaurantUtils::status;
 
 
 void Restaurant::Execute()

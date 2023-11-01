@@ -19,6 +19,16 @@ struct Meal
 };
 
 
+enum RestaurantStatus
+{
+	OrderAvailable,
+	OrderTaken,
+	IngredientsReady,
+	MealPrepared,
+	MealTaken
+};
+
+
 class RestaurantUtils
 {
 public:
@@ -28,9 +38,7 @@ public:
 	static std::mutex mut_orders;
 	static std::mutex mut_meals;
 
-	static std::condition_variable cv_order_available;
-	static std::condition_variable cv_order_taken;
-	static std::condition_variable cv_ingredients_ready;
-	static std::condition_variable cv_meals_prepared;
-	static std::condition_variable cv_meal_taken;
+	static std::condition_variable cv_update;
+
+	static RestaurantStatus status;
 };
