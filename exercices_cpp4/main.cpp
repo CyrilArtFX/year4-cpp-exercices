@@ -22,7 +22,7 @@ int main()
 	IExercice* exercice_mutex = new MutexesExo();
 	IExercice* exercice_synchronise = new Restaurant();
 
-	//exercice_parallelism->Execute();
-	//exercice_mutex->Execute();
+	exercice_parallelism->Execute();
+	exercice_mutex->Execute();
 	exercice_synchronise->Execute();
 }
