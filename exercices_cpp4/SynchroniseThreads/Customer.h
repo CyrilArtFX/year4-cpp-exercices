@@ -1,9 +1,7 @@
 #pragma once
 
 #include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <queue>
+#include <random>
 #include <iostream>
 
 #include "RestaurantUtils.h"
@@ -12,11 +10,8 @@
 class Customer
 {
 public:
-	Customer(std::condition_variable* test);
+	Customer();
 
 	void run();
-
-private:
-	std::condition_variable* test_cv;
 };
 
