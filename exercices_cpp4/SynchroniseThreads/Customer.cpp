@@ -48,7 +48,7 @@ void Customer::run()
 
 
 
-	//  meal eating part (last part to be played, wait for the waiter to give the meal)
+	//  meal eating part (6th part to be played, end of the threads)
 
 	std::unique_lock<std::mutex> lock_meal(RestaurantUtils::mut_meals);
 	RestaurantUtils::cv_meal_taken.wait(lock_meal, [] { return !RestaurantUtils::q_meals.empty(); });

@@ -9,5 +9,30 @@ void Chef::run()
 	std::cout << "TEMP : Started chef thread.\n";
 
 
+    //  prepare meal (4th part to be played, send the meal to the waiter)
 
+	std::unique_lock<std::mutex> lock(RestaurantUtils::mut_orders);
+	RestaurantUtils::cv_ingredients_ready.wait(lock, [] { return !RestaurantUtils::q_orders.empty(); });
+
+	Order order = RestaurantUtils::q_orders.front();
+	RestaurantUtils::q_orders.pop();
+
+	std::cout << "[chef] ingredients received, starting to cook\n";
+	std::this_thread::sleep_for(std::chrono::seconds(3));
+
+    {
+        std::lock_guard<std::mutex> lock_meal(RestaurantUtils::mut_meals);
+        Meal meal;
+        std::string meal_name;
+        for (auto ingredient : order.ingredients)
+        {
+            meal_name += std::to_string(ingredient);
+        }
+        meal.name = meal_name;
+
+        RestaurantUtils::q_meals.push(meal);
+    }
+
+	std::cout << "[chef] Done cooking, sending meal.\n";
+    RestaurantUtils::cv_meals_prepared.notify_one();
 }
